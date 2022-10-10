@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <a href="/profile">
+    {% if pp %}
+        <img id="home_prof" href="/profile" src="../static/images/homies_pictures/{{ username }}/{{ username }}_pics/{{ pp }}">
+    {% else %}
+        <img id="home_prof" href="/profile" src="../static/images/no_prof_pic.png"><a></li>
+    {% endif %}
+    </a>
+    <div class="header">
+        <h1>Homies.</h1>
+        <h6>Find your Home. Find your Homies.</h6>
+        <h3>Hello, {{ username }}</h3>
+    </div>
+
+    {% if pp %}  
+        <!--RANDOM NUMBER GENERATOR-->
+        <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            function getNumber() {
+                output => output.value = getNumber();
+                var minNumber = 0; // The minimum number you want
+                var maxNumber = {{ num_users }} - 1; // The maximum number you want
+                var randomNumber = Math.floor(Math.random() * (maxNumber + 1) + minNumber);
+                return randomNumber;
+            }
+          
+            // Using querySelectorAll to get all output-elements, and then update the value of the output-element with a random number.
+            document.querySelectorAll('output').forEach(output => output.value = getNumber());;
+        });
+        </script>
+            <div>
+                {% if randUser['profile_pic_test'] %} 
+                <img id="otherUserProf" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['profile_pic_test'] }}">
+                {% else %}
+                <img id="otherUserProf" src="../static/images/no_prof_pic.png">
+                {% endif %}
+                <div class="other_user_container">{{ randUser['username'] }}</div>
+                <div><b>Bio: </b>{{ bio }}</div>
+            </div>
+        <div></div>
+    <!-- Profile Pics -->
+        <h4></h4>
+        {% if randUser['profile_pic_test'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['profile_pic_test'] }}">
+        {% endif %}
+        {% if randUser['p2'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['p2'] }}">
+        {% endif %}
+        {% if randUser['p3'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['p3'] }}">
+        {% endif %}
+        <div></div>
+        {% if randUser['p4'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['p4'] }}">
+        {% endif %}
+        {% if randUser['p5'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['p5'] }}">
+        {% endif %}
+        {% if randUser['p6'] %}
+            <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_pics/{{ randUser['p6'] }}">
+        {% endif %}
+        <div></div>
+    <!-- House Pics -->
+        {% if randh1 or randh2 or randh3 or randh4 or randh5 or randh6 %}
+            <h6 class="house_header">{{ randUser['username'] }}'s House</h6>
+            <p><b>House Description: </b>{{ randUser['house_description'] }}</p>
+            {% if randh1 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h1'] }}">
+            {% endif %}
+            {% if randh2 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h2'] }}">
+            {% endif %}
+            {% if randh3 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h3'] }}">
+            {% endif %}
+            <div></div>
+            {% if randh4 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h4'] }}">
+            {% endif %}
+            {% if randh5 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h5'] }}">
+            {% endif %}
+            {% if randh6 %}
+                <img id="OtherUserHouse" src="../static/images/homies_pictures/{{ randUser['username'] }}/{{ randUser['username'] }}_house/{{ randUser['h6'] }}">
+            {% endif %}
+        {% endif %}
+
+    <!-- like/dislike buttons -->
+        <form method="POST">
+            <input name="dislike" type="submit" method="POST" value="{{ randID }}">X</input>
+            <input name="like" type="submit" method="POST" value="{{ randID }}">Like</input>            
+        </form>
+
+    {% else %}
+        <h3>Please upload a profile picture to find a homie.</h3>
+    {% endif %}
+{% endblock %}

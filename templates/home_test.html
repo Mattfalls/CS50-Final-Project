@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Test
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <form name="house_pics" method="POST">
+            {% for i in range(6) %}
+            <div class="home_test_pics">
+                <input class="x_button" formaction="/x_h{{ loop.index }}" type="submit" name="x_h{{ loop.index }}" value="{{ loop.index }}">
+                <div onclick="document.getElementById('home_pic{{ loop.index }}').click();" class="display_house" id="display_image_{{ loop.index }}" style="background-image: url(../static/images/homies_pictures/{{username}}/{{username}}_house/{{ home[i] }})"></div>
+                <input type="file" id="home_pic{{ loop.index }}" name="h{{ loop.index }}" style="display: none">
+            </div>
+            {% endfor %}
+            <textarea id="bio" name="house_description" type="text" placeholder="Enter a House Description: 1000 character limit" maxlength="1000">{{ house_description[0]['house_description'] }}</textarea>
+            <input type="submit" name="submit" value="Save Pictures" class="save_home_pics">
+        </form>
+    </div>
+
+    <script>
+        //h1
+        const h1 = document.querySelector("#home_pic1");
+        var uploaded_image = "";
+
+        h1.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_1").style.backgroundImage = `url(${uploaded_image})`;
+
+                //Troubleshoot! Display img url
+                const url = `url(${uploaded_image})`;
+                console.log(url)
+
+            });
+            reader.readAsDataURL(this.files[0]);
+        })
+
+
+        //pic2
+        const h2 = document.querySelector("#home_pic2");
+        var uploaded_image = "";
+
+        h2.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_2").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        })
+
+
+            //pic3
+        const h3 = document.querySelector("#home_pic3");
+        var uploaded_image = "";
+
+        h3.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_3").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        })
+
+        
+        //pic4
+        const h4 = document.querySelector("#home_pic4");
+        var uploaded_image = "";
+
+        h4.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_4").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        })
+
+
+        //pic5
+        const h5 = document.querySelector("#home_pic5");
+        var uploaded_image = "";
+
+        h5.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_5").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        })
+
+
+        //pic6
+        const h6 = document.querySelector("#home_pic6");
+        var uploaded_image = "";
+
+        h6.addEventListener("change", function(){
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                uploaded_image = reader.result;
+                document.querySelector("#display_image_6").style.backgroundImage = `url(${uploaded_image})`;
+            });
+            reader.readAsDataURL(this.files[0]);
+        })    
+    </script>
+
+{% endblock %}

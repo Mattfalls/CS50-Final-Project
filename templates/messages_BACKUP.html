@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messages
+{% endblock %}
+
+{% block main %}
+
+<div class="matches_container">
+    {% for i in range(matches_len) %}
+        <div class = "matches">
+            <img class="m" value="{{ matches[i] }}" id="message_prof" src="../static/images/homies_pictures/{{ match_list[i][0]['username'] }}/{{ match_list[i][0]['username'] }}_pics/{{ match_list[i][0]['profile_pic_test'] }}">
+            <p value="{{ matches[i] }}" class="oun" id="other_username">{{ matches[i] }}</p>
+        </div>
+    {% endfor %}
+    
+</div>
+<div id="messages_container">
+    <h3 style="text-align: left;">Chat</h3>
+    <div class="wrapper">
+        <div class="message_box">
+
+
+        {% for j in range(messages_len) %}
+                {% if messages[j]['user_id'] == current_user_id %}
+                    <br>
+                    <div class="user_message">
+                        <span class="text">{{ messages[j]['message'] }}</span>
+                        <b class="you">You</b>
+                        <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                    </div>
+                {% else %}
+                    <div class="other_message">
+                        <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                        <b>{{ messages[j]['username'] }}: </b>
+                        <span class="other_text">{{ messages[j]['message'] }}</span>
+                    </div>
+                {% endif %}
+
+            <br>
+        {% endfor %}
+
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <form method="POST">
+        <textarea type="text" id="new_message" name="new_message" placeholder="Type Message Here" maxlength="1000" class="chat_input"></textarea>
+        <input type="submit">
+    </form>
+</div>
+
+<div class="test">
+    <span>Who am I talking to?</span>
+    <p id="clicked_user"></p>
+    <img class="m" id="which_pic" src="">
+    
+</div>
+
+<script>
+    //load content
+    document.addEventListener('DOMContentLoaded', function(){
+        other_un = document.querySelectorAll('.oun');
+        message_prof = document.querySelectorAll('.m')
+        clicked_user = document.querySelector('#clicked_user')
+
+        for (var i = 0; i < other_un.length; i++){
+            message_prof[0].addEventListener('click', function(i){
+                document.querySelector('#clicked_user').innerHTML = other_un[0].innerHTML;
+                document.getElementById('which_pic').src = "../static/images/homies_pictures/{{ match_list[i - 1][0]['username'] }}/{{ match_list[i - 1][0]['username'] }}_pics/{{ match_list[i - 1][0]['profile_pic_test'] }}"
+        }(i));}
+    });
+</script>
+
+{% endblock %}
+
+
+<!--INSERT INTO messages (message_id, user_id, username, other_username, other_user_id, message) VALUES ('1', '7', 'Matt', 'sandy', '5', 'Hello Sandy, my name is Matt.');-->
+<!--CREATE TABLE messages (message_id INT AUTO_INCREMENT, user_id INT, username VARCHAR(30), other_username VARCHAR (30), other_user_id INT, timestamp NOT NULL DEFAULT(GETDATE()), message VARCHAR(1000));-->

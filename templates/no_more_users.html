@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    No More Users Near You
+{% endblock %}
+
+{% block main %}
+    <a href="/profile">
+    {% if pp %}
+        <img id="home_prof" href="/profile" src="../static/images/homies_pictures/{{ username }}/{{ username }}_pics/{{ pp }}">
+    {% else %}
+        <img id="home_prof" href="/profile" src="../static/images/no_prof_pic.png"><a></li>
+    {% endif %}
+    </a>
+    <div class="header">
+        <h1>Homies.</h1>
+        <h6>Find your Home. Find your Homies.</h6>
+        <h3>Hello, {{ username }}</h3>
+    </div>
+
+    <div class = "header">
+        <h6>There Are No More Users Near You</h6>
+    </div>
+
+{% endblock %}

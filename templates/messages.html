@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messages
+{% endblock %}
+
+{% block main %}
+
+<div class="matches_container">
+    {% for i in range(matches_len) %}
+        <div class = "matches">
+            <img class="m" value="{{ matches[i] }}" id="message_prof" src="../static/images/homies_pictures/{{ match_list[i][0]['username'] }}/{{ match_list[i][0]['username'] }}_pics/{{ match_list[i][0]['profile_pic_test'] }}">
+            <p value="{{ matches[i] }}" class="oun" id="other_username">{{ matches[i] }}</p>
+        </div>
+    {% endfor %}
+    
+</div>
+<div id="messages_container">
+    <h3 style="text-align: left;">Chat <img class="chatwindow" src="../static/images/homies_pictures/{{ match_list[0][0]['username'] }}/{{ match_list[0][0]['username'] }}_pics/{{ match_list[0][0]['profile_pic_test'] }}"></h3>
+    <div class="wrapper">
+        <div class="message_box">
+
+
+        {% for j in range(messages_len) %}
+                {% if messages[j]['user_id'] == current_user_id %}
+                    <br>
+                    <div class="user_message">
+                        <span class="text">{{ messages[j]['message'] }}</span>
+                        <b class="you">You</b>
+                        <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                    </div>
+                {% else %}
+                    <div class="other_message">
+                        <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                        <b>{{ messages[j]['username'] }}: </b>
+                        <span class="other_text">{{ messages[j]['message'] }}</span>
+                    </div>
+                {% endif %}
+
+            <br>
+        {% endfor %}
+
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <form method="POST">
+        <textarea type="text" id="new_message" name="new_message" placeholder="Type Message Here" maxlength="1000" class="chat_input"></textarea>
+        <input type="submit">
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="test">
+<div style="display:none;" class="messages_ls" value="{{ messages }}">{{ messages }}</div>
+    <span>Who am I talking to?</span>
+    <p id="clicked_user"></p>
+    <img class="m" id="which_pic" src="">
+    <div id="messages_container">
+        <h3 style="text-align: left;">Chat <img class="chatwindow" src="../static/images/homies_pictures/{{ match_list[0][0]['username'] }}/{{ match_list[0][0]['username'] }}_pics/{{ match_list[0][0]['profile_pic_test'] }}"></h3>
+        <div class="wrapper">
+            <div id="change_me" class="message_box">
+    
+            {% set k = "Matt" %}
+            {% for j in range(messages_len) %}
+                    {% if (messages[j]['user_id'] == current_user_id) and (messages[j]['other_username'] == k) %}
+                            <br>
+                            <div class="user_message">
+                                <span class="text">{{ messages[j]['message'] }}</span>
+                                <b class="you">You</b>
+                                <time class="timestamp">To: {{ messages[j]['other_username'] }}</time>
+                                <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                            </div>
+                        {% elif messages[j]['username'] == k %} 
+                            <div class="other_message">
+                                <time class="timestamp">{{ messages[j]['timestamp'] }}</time>
+                                <b>{{ messages[j]['username'] }}: </b>
+                                <span class="other_text">{{ messages[j]['message'] }}</span>
+                            </div>
+                    {% endif %}
+    
+                <br>
+            {% endfor %}
+            </div>
+
+<script>
+    var username_list = []
+    var pic_list = []
+    var who = ""
+    var messages = []
+    //load content
+    document.addEventListener('DOMContentLoaded', function(messages_json){
+        other_un = document.querySelectorAll('.oun');
+        message_prof = document.querySelectorAll('.m')
+        clicked_user = document.querySelector('#clicked_user')
+        messages_ls = document.querySelector('.messages_ls').innerHTML
+
+        messages_ls_arr = Array.from(messages_ls)
+        other_un_arr = Array.from(other_un)
+
+        console.log("messages_json: ", messages_json)
+        console.log("messages_ls_arr: ", messages_ls_arr)
+        
+        
+        
+        console.log("username_list: ", username_list)
+        for (var i = 0; i < other_un.length; i++){
+            i = parseInt(i)
+            var t = other_un_arr[i].innerHTML;
+            username_list.push(t);
+
+            var p = message_prof[i];
+            pic_list.push(p);
+
+
+
+
+
+
+            let ii = i
+            message_prof[i].addEventListener('click', function which(){
+                who = username_list[ii]
+                clicked_user.innerHTML = who;
+                document.getElementById('which_pic').src = pic_list[ii].src;
+                console.log(messages[0])
+
+                
+                
+                
+                // Display messages from the clicked user
+                //for (var j = 0; j < other_un.length; j++){
+                    //if (messages[j]['username'] == who){
+                       // document.getElementById('change_me').innerHTML = 
+                    //}
+                //}
+
+
+
+
+
+            });
+        }
+        console.log("messages: ", messages)
+    });
+
+
+
+
+
+
+
+
+
+
+    //NODE JS??
+    //var sqlite3 = require('sqlite3')
+    //var con = sqlite3.createConnection({
+    //    host: "localhost",
+    //    user: "yourusername",
+    //    password: "yourpassword",
+    //    database: "mydb"
+    //});
+
+
+
+</script>
+<script src="/static/JSmessages.js"></script>
+
+{% endblock %}
+
+
+<!--INSERT INTO messages (message_id, user_id, username, other_username, other_user_id, message) VALUES ('1', '7', 'Matt', 'sandy', '5', 'Hello Sandy, my name is Matt.');-->
+<!--CREATE TABLE messages (message_id INT AUTO_INCREMENT, user_id INT, username VARCHAR(30), other_username VARCHAR (30), other_user_id INT, timestamp NOT NULL DEFAULT(GETDATE()), message VARCHAR(1000));-->
+
+<!--JS IMG: //document.getElementById('which_pic').src = "../static/images/homies_pictures/{{ match_list[i][0]['username'] }}/{{ match_list[i][0]['username'] }}_pics/{{ match_list[i][0]['profile_pic_test'] }}"-->
